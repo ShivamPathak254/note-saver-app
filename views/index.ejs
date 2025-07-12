@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notes with MongoDB</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        input[type="text"],
+        textarea {
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            padding: 12px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.04);
+        }
+
+        strong {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .actions {
+            margin-top: 10px;
+        }
+
+        .actions a,
+        .actions form button {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 6px 14px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            color: white;
+            background-color: #28a745;
+            transition: background 0.3s ease;
+        }
+
+        .actions a:hover {
+            background-color: #1e7e34;
+        }
+
+        .actions a[href*="edit"] {
+            background-color: #ffc107;
+        }
+
+        .actions a[href*="edit"]:hover {
+            background-color: #e0a800;
+        }
+
+        .actions form {
+            display: inline;
+        }
+
+        .actions form button {
+            background-color: #dc3545;
+        }
+
+        .actions form button:hover {
+            background-color: #c82333;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📝 Note Saver
+
+        
+    </h1>
+
+    <form action="/submit" method="POST">
+        <input type="text" name="title" placeholder="Enter Title" required>
+        <textarea name="content" rows="5" placeholder="Write your note here..." required></textarea>
+        <button type="submit">Save Note</button>
+    </form>
+
+    <h2>📚 All Notes</h2>
+    <ul>
+        <% notes.forEach(note => { %>
+            <li>
+                <strong><%= note.title %></strong>
+                <div class="actions">
+                    <a href="/read/<%= note._id %>">Read More</a>
+                    <a href="/edit/<%= note._id %>">Edit</a>
+                    <form action="/delete/<%= note._id %>?_method=DELETE" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            </li>
+        <% }) %>
+    </ul>
+</div>
+</body>
+</html>
