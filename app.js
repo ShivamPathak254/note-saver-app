@@ -3,15 +3,18 @@ const mongoose = require('mongoose');
 const Note = require('./models/Note');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+require('dotenv').config();
+
+console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
 
 const app = express();
 const PORT = 3000;
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.log(err));
 
-mongoose.connect('mongodb://127.0.0.1:27017/notesdb', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log('MongoDB Connected'))
-  .catch(err => console.error(err));
+
+
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
